@@ -1,4 +1,4 @@
-package com.example.rozetkin_ctf_challenge
+package com.mlsdmitry.rozetkin_ctf_challenge
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

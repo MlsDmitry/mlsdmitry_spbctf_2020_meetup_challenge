@@ -1,8 +1,5 @@
-package com.example.rozetkin_ctf_challenge
+package com.mlsdmitry.rozetkin_ctf_challenge
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 import org.junit.Assert.*

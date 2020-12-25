@@ -1,5 +1,6 @@
-package com.example.rozetkin_ctf_challenge
+package com.mlsdmitry.rozetkin_ctf_challenge
 
+import MlsDmitrysChallenge.R
 import android.app.AlertDialog
 import android.app.PendingIntent
 import android.content.Intent
@@ -7,15 +8,13 @@ import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.MifareClassic
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.rozetkin_ctf_challenge.extensions.*
+import com.mlsdmitry.rozetkin_ctf_challenge.extensions.*
 import kotlinx.android.synthetic.main.activity_n_f_c.*
 import java.io.IOException
 import java.nio.ByteBuffer
-import kotlin.random.Random
 
 
 class NfcActivity : AppCompatActivity() {
@@ -397,7 +396,7 @@ class NfcActivity : AppCompatActivity() {
     fun writeLogin(mfc: MifareClassic, login: String) {
         // 5 sector - login field
         try {
-            if (!mfc.authenticateSectorWithKeyA(5, keyA[0]))
+            if (!mfc.authenticateSectorWithKeyA(5, keyA[4]))
                 throw WrongSectorKeyException()
 //            if (!mfc.authenticateSectorWithKeyB(5, keyA[0]))
 //                throw WrongSectorKeyException()

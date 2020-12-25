@@ -1,4 +1,4 @@
-package com.example.rozetkin_ctf_challenge
+package com.mlsdmitry.rozetkin_ctf_challenge
 
 object AuthType {
     const val AUTH_SIGN_UP_ACTION = 0

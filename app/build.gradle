@@ -4,15 +4,23 @@ apply plugin: 'kotlin-android-extensions'
 
 
 android {
+    signingConfigs {
+        mslsdmitry {
+            storeFile file('/Users/mlsdmitry/Documents/meetup_spbctf_2020/mlsdmitry')
+            storePassword 'Y&N&pT55LnX-ne4'
+            keyAlias 'mlsdmitry_key'
+            keyPassword 'Y&N&pT55LnX-ne4'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.rozetkin_ctf_challenge"
+        applicationId "com.mlsdmitry.rozetkin_ctf_challenge"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0"
+        versionName '6.3'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -67,6 +75,8 @@ dependencies {
 
     implementation 'org.conscrypt:conscrypt-android:2.2.1'
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0")
+    //noinspection GradleCompatible
+    implementation 'com.android.support:support-v4:28.0.0'
 
 }
 

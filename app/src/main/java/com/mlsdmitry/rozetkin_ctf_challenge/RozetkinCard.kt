@@ -1,8 +1,6 @@
-package com.example.rozetkin_ctf_challenge
+package com.mlsdmitry.rozetkin_ctf_challenge
 
-import android.content.res.Resources
 import android.util.Log
-import com.google.gson.Gson
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.GsonSerializer
 import io.ktor.client.features.json.JsonFeature

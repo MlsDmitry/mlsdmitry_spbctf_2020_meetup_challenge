@@ -1,8 +1,8 @@
-package com.example.rozetkin_ctf_challenge
+package com.mlsdmitry.rozetkin_ctf_challenge
 
+import MlsDmitrysChallenge.R
 import android.app.AlertDialog
 import android.content.Intent
-import android.nfc.tech.NfcA
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +10,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.coroutines.*
 import kotlin.properties.Delegates
+
 
 class AuthActivity : AppCompatActivity() {
     lateinit var card: RozetkinCard

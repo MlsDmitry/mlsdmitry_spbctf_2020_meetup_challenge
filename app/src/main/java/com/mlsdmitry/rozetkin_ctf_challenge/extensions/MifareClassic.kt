@@ -1,4 +1,4 @@
-package com.example.rozetkin_ctf_challenge.extensions
+package com.mlsdmitry.rozetkin_ctf_challenge.extensions
 
 import android.nfc.Tag
 import android.nfc.tech.MifareClassic

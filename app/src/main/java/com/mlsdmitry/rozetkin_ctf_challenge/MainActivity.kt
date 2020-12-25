@@ -1,12 +1,12 @@
-package com.example.rozetkin_ctf_challenge
+package com.mlsdmitry.rozetkin_ctf_challenge
 
 import android.content.Intent
 import android.nfc.NfcAdapter
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import MlsDmitrysChallenge.R
 
 
 class MainActivity : AppCompatActivity() {
