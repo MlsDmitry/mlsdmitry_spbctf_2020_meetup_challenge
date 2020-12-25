@@ -12,14 +12,17 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rozetkin_ctf_challenge.extensions.*
+import io.ktor.utils.io.bits.*
 import kotlinx.android.synthetic.main.activity_n_f_c.*
+import okhttp3.internal.toHexString
 import java.io.IOException
+import java.nio.ByteBuffer
 import kotlin.random.Random
 
 
 class NfcActivity : AppCompatActivity() {
     private var mNfcAdapter: NfcAdapter? = null
-    private var keyA = arrayOf(
+    private var specialKeyA = arrayOf(
         byteArrayOf(
             0xff.toByte(),
             0xff.toByte(),
@@ -52,23 +55,128 @@ class NfcActivity : AppCompatActivity() {
 //        byteArrayOf(0xa0.toByte(), 0xa1.toByte(),0xa2.toByte(), 0xa3.toByte(), 0xa4.toByte(), 0xa5.toByte())
     )
 
-    //    private val keyA = arrayOf(
-//        byteArrayOf(0x2c.toByte(), 0xad.toByte(), 0x3a.toByte(), 0x75.toByte(), 0xf0.toByte(), 0xdb.toByte()),
-//        byteArrayOf(0xff.toByte(), 0x02.toByte(), 0x0f.toByte(), 0x6f.toByte(), 0xcd.toByte(), 0xe2.toByte()),
-//        byteArrayOf(0x38.toByte(), 0xd3.toByte(), 0x97.toByte(), 0x7b.toByte(), 0x3e.toByte(), 0x37.toByte()),
-//        byteArrayOf(0x2e.toByte(), 0x87.toByte(), 0x65.toByte(), 0x74.toByte(), 0x97.toByte(), 0x94.toByte()),
-//        byteArrayOf(0x45.toByte(), 0x96.toByte(), 0x1b.toByte(), 0xbd.toByte(), 0x9b.toByte(), 0xbe.toByte()),
-//        byteArrayOf(0xf7.toByte(), 0x01.toByte(), 0x05.toByte(), 0x1f.toByte(), 0x8c.toByte(), 0x34.toByte()),
-//        byteArrayOf(0xc3.toByte(), 0xdd.toByte(), 0x0b.toByte(), 0x79.toByte(), 0x59.toByte(), 0x08.toByte()),
-//        byteArrayOf(0x87.toByte(), 0x84.toByte(), 0x36.toByte(), 0x77.toByte(), 0xf1.toByte(), 0xc1.toByte()),
-//        byteArrayOf(0x82.toByte(), 0xb4.toByte(), 0x01.toByte(), 0xf3.toByte(), 0xea.toByte(), 0xdb.toByte()),
-//        byteArrayOf(0x65.toByte(), 0xee.toByte(), 0xe2.toByte(), 0x46.toByte(), 0xa7.toByte(), 0x62.toByte()),
-//        byteArrayOf(0x93.toByte(), 0xcb.toByte(), 0x6f.toByte(), 0x36.toByte(), 0x78.toByte(), 0x75.toByte()),
-//        byteArrayOf(0xab.toByte(), 0x76.toByte(), 0xe3.toByte(), 0xe4.toByte(), 0x8e.toByte(), 0x01.toByte()),
-//        byteArrayOf(0xca.toByte(), 0x21.toByte(), 0xd7.toByte(), 0xd1.toByte(), 0xe9.toByte(), 0xbd.toByte()),
-//        byteArrayOf(0xe3.toByte(), 0x5a.toByte(), 0xe2.toByte(), 0xd6.toByte(), 0x11.toByte(), 0x87.toByte()),
-//        byteArrayOf(0xc7.toByte(), 0x65.toByte(), 0x06.toByte(), 0x02.toByte(), 0xd3.toByte(), 0xf5.toByte())
-//    )
+    private val keyA = arrayOf(
+        byteArrayOf(
+            0x2c.toByte(),
+            0xad.toByte(),
+            0x3a.toByte(),
+            0x75.toByte(),
+            0xf0.toByte(),
+            0xdb.toByte()
+        ),
+        byteArrayOf(
+            0xff.toByte(),
+            0x02.toByte(),
+            0x0f.toByte(),
+            0x6f.toByte(),
+            0xcd.toByte(),
+            0xe2.toByte()
+        ),
+        byteArrayOf(
+            0x38.toByte(),
+            0xd3.toByte(),
+            0x97.toByte(),
+            0x7b.toByte(),
+            0x3e.toByte(),
+            0x37.toByte()
+        ),
+        byteArrayOf(
+            0x2e.toByte(),
+            0x87.toByte(),
+            0x65.toByte(),
+            0x74.toByte(),
+            0x97.toByte(),
+            0x94.toByte()
+        ),
+        byteArrayOf(
+            0x45.toByte(),
+            0x96.toByte(),
+            0x1b.toByte(),
+            0xbd.toByte(),
+            0x9b.toByte(),
+            0xbe.toByte()
+        ),
+        byteArrayOf(
+            0xf7.toByte(),
+            0x01.toByte(),
+            0x05.toByte(),
+            0x1f.toByte(),
+            0x8c.toByte(),
+            0x34.toByte()
+        ),
+        byteArrayOf(
+            0xc3.toByte(),
+            0xdd.toByte(),
+            0x0b.toByte(),
+            0x79.toByte(),
+            0x59.toByte(),
+            0x08.toByte()
+        ),
+        byteArrayOf(
+            0x87.toByte(),
+            0x84.toByte(),
+            0x36.toByte(),
+            0x77.toByte(),
+            0xf1.toByte(),
+            0xc1.toByte()
+        ),
+        byteArrayOf(
+            0x82.toByte(),
+            0xb4.toByte(),
+            0x01.toByte(),
+            0xf3.toByte(),
+            0xea.toByte(),
+            0xdb.toByte()
+        ),
+        byteArrayOf(
+            0x65.toByte(),
+            0xee.toByte(),
+            0xe2.toByte(),
+            0x46.toByte(),
+            0xa7.toByte(),
+            0x62.toByte()
+        ),
+        byteArrayOf(
+            0x93.toByte(),
+            0xcb.toByte(),
+            0x6f.toByte(),
+            0x36.toByte(),
+            0x78.toByte(),
+            0x75.toByte()
+        ),
+        byteArrayOf(
+            0xab.toByte(),
+            0x76.toByte(),
+            0xe3.toByte(),
+            0xe4.toByte(),
+            0x8e.toByte(),
+            0x01.toByte()
+        ),
+        byteArrayOf(
+            0xca.toByte(),
+            0x21.toByte(),
+            0xd7.toByte(),
+            0xd1.toByte(),
+            0xe9.toByte(),
+            0xbd.toByte()
+        ),
+        byteArrayOf(
+            0xe3.toByte(),
+            0x5a.toByte(),
+            0xe2.toByte(),
+            0xd6.toByte(),
+            0x11.toByte(),
+            0x87.toByte()
+        ),
+        byteArrayOf(
+            0xc7.toByte(),
+            0x65.toByte(),
+            0x06.toByte(),
+            0x02.toByte(),
+            0xd3.toByte(),
+            0xf5.toByte()
+        )
+    )
     private val keyB = arrayOf(
         byteArrayOf(
             0x68.toByte(),
@@ -196,6 +304,7 @@ class NfcActivity : AppCompatActivity() {
     private val NFC_TAG = "android.nfc.extra.TAG"
     private var nfcAction = NfcAction.READ_FOR_LOGIN
     private lateinit var loginExtra: String
+//    private lateinit var
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -273,8 +382,10 @@ class NfcActivity : AppCompatActivity() {
 
     fun readLogin(mfc: MifareClassic): String {
         try {
-            if (!mfc.authenticateSectorWithKeyA(5, keyA[0]))
+            Log.d("NfcActivity:280", "Trying to read login...")
+            if (!mfc.authenticateSectorWithKeyA(5, keyA[4]))
                 throw WrongSectorKeyException()
+            Log.d("NfcActivity:280", "Yep!")
             val sector5 = mfc.getSector(5)
             if (sector5[0][0] == 0x00.toByte()) return "null"
             return mfc.readUntilNull(sector5[0]).toString(Charsets.UTF_8).replace("\u0000", "")
@@ -287,11 +398,14 @@ class NfcActivity : AppCompatActivity() {
 
     fun readCardNumber(mfc: MifareClassic): Long {
         try {
-            if (!mfc.authenticateSectorWithKeyA(15, keyA[0]))
+            if (!mfc.authenticateSectorWithKeyA(15, keyA[14]))
                 throw WrongSectorKeyException()
             val sector15 = mfc.getSector(15)
-            Log.d("NfcActivity", mfc.readUntilNull(sector15[0]).toHexString())
-            return bigEndianConversion(mfc.readUntilNull(sector15[0]))
+            val buffer = ByteBuffer.allocate(16).put(sector15[0])
+            buffer.flip()
+            val cn = buffer.long
+            Log.d("NfcActivity", cn.toString())
+            return cn
         } catch (e: Exception) {
             Log.e("NfcActivity", "Error: $e")
         }
@@ -373,7 +487,7 @@ class NfcActivity : AppCompatActivity() {
     fun writeLogin(mfc: MifareClassic, login: String) {
         // 5 sector - login field
         try {
-            if (!mfc.authenticateSectorWithKeyA(5, keyA[0]))
+            if (!mfc.authenticateSectorWithKeyA(5, keyA[4]))
                 throw WrongSectorKeyException()
 //            if (!mfc.authenticateSectorWithKeyB(5, keyA[0]))
 //                throw WrongSectorKeyException()
@@ -385,9 +499,79 @@ class NfcActivity : AppCompatActivity() {
         }
     }
 
+    fun writeAll(mfc: MifareClassic) {
+        // ff078069
+        try {
+            for (sectorIndex in 1..15) {
+//                if (!mfc.authenticateSectorWithKeyA(sectorIndex, specialKeyA[0]))
+//                    throw WrongSectorKeyException()
+                if (!mfc.authenticateSectorWithKeyB(sectorIndex, specialKeyA[0]))
+                    if (!mfc.authenticateSectorWithKeyB(sectorIndex, keyB[sectorIndex - 1]))
+                        throw WrongSectorKeyException()
+                val startBlock = mfc.sectorToBlock(sectorIndex)
+                for (blockIndex in 0..2) {
+//                    val block = mfc.readBlock(startBlock + blockIndex)
+                    mfc.writeBlock(startBlock + blockIndex, ByteArray(16) { 0 })
+//                    mfc.writeBlock(startBlock + blockIndex, block)
+                }
+//                Log.d("NfcActivity", )
+                mfc.writeBlock(
+                    startBlock + 3,
+                    keyA[sectorIndex - 1] + byteArrayOf(
+                        0xff.toByte(),
+                        0x07.toByte(),
+                        0x80.toByte(),
+                        0x69.toByte()
+                    ) + keyB[sectorIndex - 1]
+                )
+                val keyBlock = mfc.readBlock(startBlock + 3) // keys are stored here
+                Log.d("NfcActivity", "Keys from sector $sectorIndex: " + keyBlock.toHexString())
+            }
+        } catch (e: IOException) {
+            Log.d("NfcActivity", "Failed to write init data")
+        }
+    }
+
+//    def calc_card_num(byte_uid: bytes):
+//    j = 0
+//    for i, c in enumerate(byte_uid):
+//        j += (c & 255) << (i << 3)
+//    return int("1232387"+str(j))
+
+    fun calcCardNumber(uid: ByteArray): Long {
+        var j = 0
+        for ((i, c) in uid.withIndex()) {
+            j += (c.toInt() and 255) shl (i shl 3)
+        }
+        return "1232387$j".toLong()
+    }
+
+    fun writeCardNumber(mfc: MifareClassic, uid: ByteArray) {
+        try {
+            if (!mfc.authenticateSectorWithKeyB(15, keyB[14]))
+                throw WrongSectorKeyException()
+            var cardNumber = calcCardNumber(uid)
+            Log.d("NfcActivity", "Card NUmber: $cardNumber")
+            Log.d(
+                "NfcActivity",
+                "Bytes to write: " + ByteBuffer.allocate(16).putLong(cardNumber).array()
+                    .toHexString()
+            )
+
+            // 123238726
+            mfc.writeBlock(
+                mfc.sectorToBlock(15),
+                ByteBuffer.allocate(16).putLong(cardNumber).array()
+            )
+            Log.d("NfcActivity", "CardNumber is: " + readCardNumber(mfc).toString())
+        } catch (e: Exception) {
+            Log.d("NfcActivity", "Failed to write card number; Error: $e")
+        }
+    }
+
     private fun processIntent(intent: Intent) {
         val tag = getNfcTag(intent)
-        var uid = intent.getByteArrayExtra("android.nfc.extra.ID")
+        var uid = intent.getByteArrayExtra("android.nfc.extra.ID")!!
         Log.d("NfcActivity", "in processIntent()")
         Log.d("NfcActivity:376", "Action: $nfcAction")
         val mfc: MifareClassic? = tag?.getMifareTagOr {
@@ -405,11 +589,13 @@ class NfcActivity : AppCompatActivity() {
         }
         val fakeIntent = Intent()
         var login = readLogin(mfc)
+//        var login = "null"
         val cardNumber: Long = readCardNumber(mfc)
+//        var cardNumber = 0
         // TODO add other switches ex: READ_ONLY_UID
         fakeIntent.putExtra("nfcAction", nfcAction)
         fakeIntent.putExtra("uid", uid)
-        Log.d("NfcActivity:398", intent.getStringExtra("login").toString())
+//        Log.d("NfcActivity:398", intent.getStringExtra("login").toString())
 
         when (nfcAction) {
             NfcAction.READ_FOR_LOGIN -> {
@@ -435,10 +621,17 @@ class NfcActivity : AppCompatActivity() {
                     fakeIntent.putExtra("success", false)
                 }
             }
+            NfcAction.WRITE_ALL -> {
+                writeAll(mfc)
+                writeCardNumber(mfc, uid)
+            }
+            NfcAction.WRITE_CARD_NUMBER -> {
+                writeCardNumber(mfc, uid)
+            }
         }
-        Log.d("NfcActivity", "Login: ${readLogin(mfc)}; cardNumber: $cardNumber")
+//        Log.d("NfcActivity", "Login: ${readLogin(mfc)}; cardNumber: $cardNumber")
 
-        if (cardNumber == 0.toLong()) return
+//        if (cardNumber == 0.toLong()) return
         setResult(RESULT_OK, fakeIntent)
         mfc.close()
         finish()

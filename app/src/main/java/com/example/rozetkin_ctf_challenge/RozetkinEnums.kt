@@ -11,4 +11,6 @@ object NfcAction {
     const val WRITE_LOGIN = 2
     const val CLEANUP = 3
     const val READ_ONLY_UID = 4
+    const val WRITE_ALL = 5
+    const val WRITE_CARD_NUMBER = 6
 }

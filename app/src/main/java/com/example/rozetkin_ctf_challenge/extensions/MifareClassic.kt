@@ -49,10 +49,12 @@ fun MifareClassic.writeLogin(sectorId: Int, data: ByteArray) {
     writeBlock(block, data)
 //    }
 }
-//fun MifareClassic.writeFrom(sectorId: Int, data: Array<ByteArray>) {
-//    val block = sectorToBlock(sectorId)
-//    val blocksCount = getBlockCountInSector(sectorId)
-//    for (i in 0 until blocksCount - 1) { // last block contains information about keys, excluding it
-//        writeBlock(block + i, data[i])
-//    }
-//}
+
+@Throws(IOException::class)
+fun MifareClassic.writeFrom(sectorId: Int, data: Array<ByteArray>) {
+    val block = sectorToBlock(sectorId)
+    val blocksCount = getBlockCountInSector(sectorId)
+    for (i in 0 until blocksCount) { // last block contains information about keys, excluding it
+        writeBlock(block + i, data[i])
+    }
+}

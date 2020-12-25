@@ -152,7 +152,7 @@ class AuthActivity : AppCompatActivity() {
             }
             // TODO fix: Animators may only be run on Looper threads because of next line
             register_button.isEnabled = false
-            Log.d("AuthActivity:140", "WriteLoginDataToCard uid validation success!")
+//            Log.d("AuthActivity:140", "WriteLoginDataToCard uid validation success!")
             val activity = Intent(applicationContext, NfcActivity::class.java)
             activity.putExtra("nfcAction", NfcAction.WRITE_LOGIN)
             activity.putExtra("previousUid", card.previousUid)
@@ -201,7 +201,8 @@ class AuthActivity : AppCompatActivity() {
             return
         }
         val activity = Intent(this, NfcActivity::class.java)
-        activity.putExtra("nfcAction", NfcAction.READ_ONLY_UID)
+        activity.putExtra("nfcAction", NfcAction.WRITE_LOGIN)
+        activity.putExtra("login", card.login)
         startActivityForResult(activity, 1)
     }
 
@@ -228,9 +229,11 @@ class AuthActivity : AppCompatActivity() {
                 Log.d("AuthActivity", "Has message: ${response.message}")
                 //            if (!response.error) {
                 //
-                val homeActivity = Intent(applicationContext, HomeActivity::class.java)
-                homeActivity.putExtra("apiKey", card.apiKey)
-                startActivity(homeActivity)
+                if (!response.error) {
+                    val homeActivity = Intent(applicationContext, HomeActivity::class.java)
+                    homeActivity.putExtra("apiKey", card.apiKey)
+                    startActivity(homeActivity)
+                }
                 //            } else {
                 ////                    log.text = response.message
                 //            }

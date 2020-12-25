@@ -31,9 +31,8 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("authType", AuthType.AUTH_SIGN_UP_ACTION)
             startActivity(intent)
         }
-        sign_in_button.setOnClickListener {
-            val intent = Intent(this, AuthActivity::class.java)
-            intent.putExtra("authType", AuthType.AUTH_SIGN_IN_ACTION)
+        init_card_activity_btn.setOnClickListener {
+            val intent = Intent(this, InitCard::class.java)
             startActivity(intent)
         }
     }

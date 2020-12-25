@@ -17,7 +17,7 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
-    <string name="sign_in">Sign in</string>
+    <string name="sign_in">Sign in / Sign up</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
@@ -32,4 +32,6 @@
     <string name="wrong_card_number">Wrong card number</string>
     <string name="different_uid">This card has different uid that one you used to register in a first place</string>
     <string name="write_login_failed">Failed to write login data</string>
+    <string name="write_to_card">Write to Card</string>
+    <string name="init_card_activity">Init card with keys</string>
 </resources>
