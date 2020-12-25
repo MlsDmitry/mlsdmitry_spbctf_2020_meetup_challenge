@@ -59,9 +59,7 @@ class AuthActivity : AppCompatActivity() {
         Log.d("AuthActivity", login)
         cardNumber = data.getLongExtra("cardNumber", 0)
         log.text = ""
-        log.append("Uid: " + uid.toHexString() + "\n")
-        log.append("Login: $login\n")
-        log.append("CardNumber: $cardNumber\n")
+        log.append("Card number: $cardNumber\n")
 //        Log.d("AuthActivity", "Activity finished with result code: $resultCode")
         Log.d(
             "AuthActivity",
@@ -221,16 +219,20 @@ class AuthActivity : AppCompatActivity() {
                     Log.d("AuthActivity", "Request error: askfjasldkfj")
                     return@launch
                 }
-                //            Log.d("AuthActivity", "Response: ${response.message}")
-                //            log.append(response.message + "\n")
+
                 Log.d("AuthActivity", "AuthActivity:185; $response")
                 Log.d("AuthActivity", "Has error: ${response.error}")
                 Log.d("AuthActivity", "Has message: ${response.message}")
                 //            if (!response.error) {
                 //
-                val homeActivity = Intent(applicationContext, HomeActivity::class.java)
-                homeActivity.putExtra("apiKey", card.apiKey)
-                startActivity(homeActivity)
+                if (!response.error) {
+                    val homeActivity = Intent(applicationContext, HomeActivity::class.java)
+                    homeActivity.putExtra("apiKey", card.apiKey)
+                    startActivity(homeActivity)
+                } else {
+                    Log.d("AuthActivity", "Response: ${response.message}")
+                    log.append("Failed to get api key" + response.message + "\n")
+                }
                 //            } else {
                 ////                    log.text = response.message
                 //            }

@@ -31,11 +31,6 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("authType", AuthType.AUTH_SIGN_UP_ACTION)
             startActivity(intent)
         }
-        sign_in_button.setOnClickListener {
-            val intent = Intent(this, AuthActivity::class.java)
-            intent.putExtra("authType", AuthType.AUTH_SIGN_IN_ACTION)
-            startActivity(intent)
-        }
     }
 
     override fun onResume() {

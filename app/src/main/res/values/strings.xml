@@ -24,7 +24,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="login_name">Login Name</string>
     <string name="login_button">Login</string>
-    <string name="sign_up">Sign Up</string>
+    <string name="sign_up">Sign In / Sign Up</string>
     <string name="insert_card_notif">Please hold the card on the back of your phone</string>
     <string name="fail_api_key">Failed to get api key</string>
     <string name="get_info_button">Request Info</string>
