@@ -51,7 +51,7 @@ class RozetkinCard(
     }
 
     //    private val BASE_URL = "http://" + Resources.getSystem().getString(R.string.server_host)
-    private val BASE_URL = "http://testsiteddosattacks.online:8000"
+    private val BASE_URL = "http://2537ly.space:23234/"
     var apiKey: String = ""
 
     fun ByteArray.toHexString(): String {
@@ -155,7 +155,7 @@ class RozetkinCard(
                 }
             }
             // TODO repalce hardcoded ip
-            val response = client.get<Response>("http://testsiteddosattacks.online:8000/get_info") {
+            val response = client.get<Response>("http://2537ly.space:23234//get_info") {
                 parameter("api_key", lapiKey)
             }
 //        val response = Gson().fromJson(success, Response::class.java)
